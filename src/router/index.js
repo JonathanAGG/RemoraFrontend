@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Zeus from '@/components/Zeus'
-import Geofence from '@/components/Geofence'
+import DashGeofence from '@/components/DashGeofence'
 
 Vue.use(Router)
 
@@ -14,13 +14,13 @@ export default new Router({
     },
     {
       path: '/geofence',
-      name: 'Geofence',
-      component: Geofence
+      name: 'DashGeofence',
+      component: DashGeofence
     },
     {
       path: '/simplify',
       name: 'Simplify',
-      component: Geofence
+      component: DashGeofence
     }
   ]
 })
