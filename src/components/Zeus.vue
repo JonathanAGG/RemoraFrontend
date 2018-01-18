@@ -1,12 +1,13 @@
 <template>
   <div class="zeus">
-      <div id="map"></div>
+      <div id="map"> 
+        <control-index v-bind:objMap="map"></control-index>
+      </div>
       <points v-bind:objMap="map"></points>
       <lines v-bind:objMap="map"></lines>
       <geofences v-bind:objMap="map"></geofences>
       <stats></stats>
       <alert-geofence></alert-geofence>
-      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#statsModal">Stats</button>
   </div>
 </template>
 
@@ -15,6 +16,7 @@ import mapboxgl from "mapbox-gl";
 
 import Stats from "./Stats";
 import AlertGeofence from "./AlertGeofence";
+import ControlIndex from "./ControlIndex";
 import Points from "./Points";
 import Lines from "./Lines";
 import Geofences from "./Geofences";
@@ -26,7 +28,8 @@ export default {
     AlertGeofence,
     Points,
     Lines,
-    Geofences
+    Geofences,
+    ControlIndex
   },
   data() {
     return {
@@ -55,6 +58,6 @@ export default {
 <style>
 #map {
   width: 100%;
-  height: 92vh;
+  height: 93vh;
 }
 </style>
