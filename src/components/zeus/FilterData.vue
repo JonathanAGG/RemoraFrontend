@@ -42,7 +42,7 @@ import datePicker from "vue-bootstrap-datetimepicker";
 import "eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css";
 
 import axios from "axios"; //Axios
-import eventBus from "../eventBus"; //EventBus
+import eventBus from "../../eventBus"; //EventBus
 
 export default {
   name: "FilterData",

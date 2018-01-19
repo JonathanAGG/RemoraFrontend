@@ -16,10 +16,10 @@
 </template>
 
 <script>
-import eventBus from "../eventBus"; //EventBus
+import eventBus from "../../eventBus"; //EventBus
 
 export default {
-  name: "ControlIndex",
+  name: "ControlZeus",
   props: ["objMap"],
   data() {
     return {

@@ -9,7 +9,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <img src="../assets/RemoraLogo.gif" alt="" style="width: 100px; height: 50px; margin: 0px 10px">
+      <img src="../../assets/img/RemoraLogo.gif" alt="" style="width: 100px; height: 50px; margin: 0px 10px">
       <!-- <a class="navbar-brand" href="#">REMORA</a> -->
     </div>
 

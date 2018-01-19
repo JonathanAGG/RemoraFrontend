@@ -1,27 +1,35 @@
 <template>
   <div class="zeus">
       <div id="map"> 
-        <control-geofence v-bind:objMap="map"></control-geofence>
+        <control-zeus v-bind:objMap="map"></control-zeus>
       </div>
-
+      <points v-bind:objMap="map"></points>
+      <lines v-bind:objMap="map"></lines>
       <geofences v-bind:objMap="map"></geofences>
-      <import-geofence></import-geofence>
-
+      <stats></stats>
+      <alert-geofence></alert-geofence>
   </div>
 </template>
 
 <script>
 import mapboxgl from "mapbox-gl";
 
-import ControlGeofence from "./ControlGeofence";
-import Geofences from "./Geofences";
-import ImportGeofence from "./ImportGeofence"
+import Stats from "./Stats";
+import AlertGeofence from "../common/AlertGeofence";
+import ControlZeus from "./ControlZeus";
+import Points from "../common/Points";
+import Lines from "../common/Lines";
+import Geofences from "../common/Geofences";
+
 export default {
-  name: "DashGeofence",
+  name: "MapIndex",
   components: {
+    Stats,
+    AlertGeofence,
+    Points,
+    Lines,
     Geofences,
-    ControlGeofence,
-    ImportGeofence
+    ControlZeus
   },
   data() {
     return {
@@ -35,7 +43,7 @@ export default {
 
       this.map = new mapboxgl.Map({
         container: "map",
-        style: 'mapbox://styles/mapbox/streets-v9',
+        style: "mapbox://styles/mapbox/light-v9",
         center: [-84.07836513337293, 9.933419690622571],
         zoom: 6
       });

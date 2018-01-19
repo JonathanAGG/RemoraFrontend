@@ -1,7 +1,7 @@
 <template>
 </template>
 <script>
-import eventBus from "../eventBus";
+import eventBus from "../../eventBus";
 import io from "socket.io-client";
 export default {
   name: "Sockets",

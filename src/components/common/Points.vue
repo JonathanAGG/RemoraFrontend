@@ -2,7 +2,7 @@
 </template>
 <script>
 import axios from "axios";
-import eventBus from "../eventBus";
+import eventBus from "../../eventBus";
 export default {
   name: "Points",
   props: ["objMap"],

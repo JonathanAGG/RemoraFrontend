@@ -8,8 +8,8 @@
 </template>
 
 <script>
-import NavBar from './components/NavBar'
-import Sockets from './components/Sockets'
+import NavBar from './components/common/NavBar'
+import Sockets from './components/common/Sockets'
 export default {
   name: 'app',
   components: {

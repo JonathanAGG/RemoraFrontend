@@ -7,7 +7,7 @@
 var Highcharts = require("highcharts/highstock");
 require("highcharts/modules/map")(Highcharts);
 
-import eventBus from "../eventBus";
+import eventBus from "../../eventBus";
 
 export default {
   name: "Chart",
