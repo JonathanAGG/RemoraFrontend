@@ -50,6 +50,9 @@ export default {
           "fill-opacity": 0.8
         }
       });
+    },
+    _updateGeofences: function(featureCollection) {
+      this.map.getSource("scGeofences").setData(featureCollection);
     }
   },
   watch: {
@@ -57,6 +60,16 @@ export default {
       this.map = objMap;
       this._initGeofences();
     }
+  },
+  mounted() {
+    var self = this;
+    //Actualiza el mapa cuando se crea una nueva geofence
+    eventBus.$on("newGeofence", function(featureCollection) {
+      featureCollection.features.forEach(feature => {
+        self.gjGeofences.features.push(feature);
+      });
+      self._updateGeofences(self.gjGeofences);
+    });
   }
 };
 </script>

@@ -10,13 +10,15 @@
                     <h4 class="modal-title" id="modalLabel">Import</h4>
                 </div>
                 <div class="modal-body">
-
-                  <input type="file" accept=".zip" @change="processFile($event)">
+                  <div class="alert alert-success" v-show="isSuccess">
+                      <strong>Success!</strong> Geofence saved.
+                  </div>
+                  <input type="file" accept=".zip" id="inputFile" @change="_importFile($event)">
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" style="display: none;" id="importSHP">Importar</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-default" v-show="showImportBtn" @click="_parseToGeojson()">Import</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                 </div>
             </div>
         </div>
@@ -26,8 +28,8 @@
 <script>
 import eventBus from "../../eventBus";
 
+import axios from "axios";
 import shpToGeojson from "../../assets/libs/shp2geojson/shpToGeojson";
-
 
 export default {
   name: "ImportGeofence",
@@ -35,25 +37,56 @@ export default {
   components: {},
   data() {
     return {
-      file: Object
+      file: Object,
+      showImportBtn: false,
+      isSuccess: false,
+      HTTP_SERVER_URL: process.env.HTTP_SERVER_URL
     };
   },
   methods: {
-    processFile(event) {
-      
+    _importFile: function(event) {
       var self = this;
+      this.file = null;
       this.file = event.target.files[0];
+      console.log("imp", event.target.files[0]);
+      this.showImportBtn = true;
+    },
 
+    _parseToGeojson: function() {
+      let self = this;
+      let round = true;
       shpToGeojson.loadshp(
         {
-          url: self.file,
+          url: this.file,
           encoding: "big5",
           EPSG: 3826
         },
         function(geojson) {
-          console.log("responseSHP2geoJson", geojson);
+          if (round == true) {
+            self._saveGeofences(geojson);
+            round = false;
+          }
         }
       );
+    },
+    _saveGeofences: function(featureCollection) {
+      let self = this;
+      //Envia la geofence al server para almacenarla
+      axios
+        .post(this.HTTP_SERVER_URL + "geofences", featureCollection)
+        .then(function(response) {
+          //Actializa el mapa
+          eventBus.$emit("newGeofence", featureCollection);
+          self.showImportBtn = false;
+          self.isSuccess = true;
+          setTimeout(() => {
+            $("#importGeofenceModal").modal("hide");
+            self.isSuccess = false;
+          }, 2000);
+        })
+        .catch(function(error) {
+          console.log("err", error);
+        });
     }
   }
 };
