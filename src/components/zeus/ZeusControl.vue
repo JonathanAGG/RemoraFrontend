@@ -19,7 +19,7 @@
 import eventBus from "../../eventBus"; //EventBus
 
 export default {
-  name: "ControlZeus",
+  name: "ZeusControl",
   props: ["objMap"],
   data() {
     return {

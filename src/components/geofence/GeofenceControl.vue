@@ -3,44 +3,37 @@
 
         <div id="dash-rigth" style="margin: 1% 10px">
             <button class="btn btn-default" title="Import Shapefile" data-toggle="modal" data-target="#importGeofenceModal">Import</button>
-            <button class="btn btn-default" id="drawManual">Manual</button>
+            <button class="btn btn-default" id="drawManual" @click="showManualDraw=!showManualDraw">Manual</button>
+            <draw-control v-bind="{objMap, showManualDraw}"></draw-control>
         </div>
     </div>
 </template>
 
 <script>
 import eventBus from "../../eventBus"; //EventBus
+import mapboxgl from "mapbox-gl";
+
+import MapboxDraw from "mapbox-gl-draw";
+import "mapbox-gl-draw/dist/mapbox-gl-draw.css";
+import DrawControl from './DrawControl'
 
 export default {
-  name: "ControlIndex",
+  name: "GeofenceControl",
   props: ["objMap"],
+  components:{DrawControl},
   data() {
     return {
-      map: Object
+      map: Object,
+      draw: Object,
+      showManualDraw: false
     };
-  },
-  methods: {
-    drawLines: function() {
-      let visibility = this.map.getLayoutProperty("lyrLines", "visibility");
-      this.map.setLayoutProperty("lyrLines","visibility", visibility === "visible" ? "none" : "visible");
-    },
-    resetZoom: function() {
-      this.map.flyTo({
-        center: [-84.07836513337293, 9.933419690622571],
-        zoom: 7,
-        bearing: 0,
-        speed: 2.5,
-        curve: 1,
-        easing: function(t) {
-          return t;
-        }
-      });
-    }
   },
   watch: {
     objMap: function(objMap) {
       this.map = objMap;
     }
+  },
+  mounted() {
   }
 };
 </script>

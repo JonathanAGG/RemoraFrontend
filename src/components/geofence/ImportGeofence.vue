@@ -75,8 +75,9 @@ export default {
       axios
         .post(this.HTTP_SERVER_URL + "geofences", featureCollection)
         .then(function(response) {
-          //Actializa el mapa
-          eventBus.$emit("newGeofence", featureCollection);
+          
+          eventBus.$emit("newGeofence", featureCollection); //Actializa el mapa
+
           self.showImportBtn = false;
           self.isSuccess = true;
           setTimeout(() => {
