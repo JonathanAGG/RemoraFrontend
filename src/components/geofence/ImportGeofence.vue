@@ -10,9 +10,6 @@
                     <h4 class="modal-title" id="modalLabel">Import</h4>
                 </div>
                 <div class="modal-body">
-                  <div class="alert alert-success" v-show="isSuccess">
-                      <strong>Success!</strong> Geofence saved.
-                  </div>
                   <input type="file" accept=".zip" id="inputFile" @change="_importFile($event)">
 
                 </div>
@@ -48,7 +45,6 @@ export default {
       var self = this;
       this.file = null;
       this.file = event.target.files[0];
-      console.log("imp", event.target.files[0]);
       this.showImportBtn = true;
     },
 
@@ -75,17 +71,12 @@ export default {
       axios
         .post(this.HTTP_SERVER_URL + "geofences", featureCollection)
         .then(function(response) {
-          
+          $("#importGeofenceModal").modal("hide");
           eventBus.$emit("newGeofence", featureCollection); //Actializa el mapa
-
-          self.showImportBtn = false;
-          self.isSuccess = true;
-          setTimeout(() => {
-            $("#importGeofenceModal").modal("hide");
-            self.isSuccess = false;
-          }, 2000);
+          eventBus.$emit("successAlert", "Saved Geofence."); //Mostrar mensaje de exito
         })
         .catch(function(error) {
+          eventBus.$emit("dangerAlert", error); //Mostrar mensaje de error
           console.log("err", error);
         });
     }

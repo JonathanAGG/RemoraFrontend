@@ -63,7 +63,7 @@ export default {
     _saveGeofences: function(featureCollection) {
       console.log("save", featureCollection);
       if (this.draw.getAll().features.length == 0) {
-        eventBus.$emit("gefenceDangerAlert", "Debe dibujar el poligono primero"); //Mostrar mensaje de error
+        eventBus.$emit("dangerAlert", "Debe dibujar el poligono primero"); //Mostrar mensaje de error
       } else {
         let self = this;
         //Envia la geofence al server para almacenarla
@@ -71,7 +71,7 @@ export default {
           .post(self.HTTP_SERVER_URL + "geofences", this.draw.getAll())
           .then(function(response) {
             eventBus.$emit("newGeofence", self.draw.getAll()); //Actializa el mapa
-            eventBus.$emit("gefenceSuccessAlert", "Geofence saved."); //Mostrar mensaje de exito
+            eventBus.$emit("successAlert", "Saved Geofence."); //Mostrar mensaje de exito
             self.draw.deleteAll().getAll();
           })
           .catch(function(error) {

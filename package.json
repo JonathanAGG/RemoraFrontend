@@ -20,6 +20,7 @@
     "mapbox-gl-draw": "^0.16.0",
     "proj4": "^2.4.4",
     "socket.io-client": "^2.0.4",
+    "vis-why": "^1.2.2",
     "vue": "^2.5.2",
     "vue-bootstrap-datetimepicker": "^4.1.2",
     "vue-router": "^3.0.1"

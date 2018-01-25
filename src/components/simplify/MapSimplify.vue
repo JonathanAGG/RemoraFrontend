@@ -1,12 +1,10 @@
 <template>
   <div class="zeus">
+      <div id="map"></div>
       <alerts></alerts>
-      <div id="map"> 
-        <geofence-control v-bind:objMap="map"></geofence-control>
-      </div>
-
       <geofences v-bind:objMap="map"></geofences>
-      <import-geofence></import-geofence>
+      <simplifys v-bind:objMap="map"></simplifys>
+      <simplify-process></simplify-process>
   </div>
 </template>
 
@@ -16,19 +14,21 @@ import mapboxgl from "mapbox-gl";
 
 import Alerts from "../common/Alerts";
 import Geofences from "../common/Geofences";
-import ImportGeofence from "./ImportGeofence";
-import GeofenceControl from "./GeofenceControl";
+import Simplifys from "../common/Simplifys";
+import SimplifyProcess from "./SimplifyProcess";
 export default {
   name: "MapGeofence",
   components: {
     Alerts,
     Geofences,
-    GeofenceControl,
-    ImportGeofence
+    Simplifys,
+    SimplifyProcess
+    
   },
   data() {
     return {
-      map: Object
+      map: Object,
+      simplifyFeature: Object
     };
   },
   methods: {
@@ -38,14 +38,14 @@ export default {
 
       this.map = new mapboxgl.Map({
         container: "map",
-        style: "mapbox://styles/mapbox/streets-v9",
+        style: "mapbox://styles/mapbox/dark-v9",
         center: [-84.07836513337293, 9.933419690622571],
         zoom: 6
       });
     }
   },
   mounted() {
-    this._loadMap();
+    this._loadMap()
   }
 };
 </script>
