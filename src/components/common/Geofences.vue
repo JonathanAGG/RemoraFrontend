@@ -49,6 +49,17 @@ export default {
           "fill-opacity": 0.8
         }
       });
+
+      if (
+        this.map.getLayer("lyrSquares") &&
+        this.map.getLayer("lyrSimplifys")
+      ) {
+        this.map.moveLayer("lyrSimplifys", "lyrSquares");
+        this.map.moveLayer("lyrGeofences", "lyrSimplifys");
+      }
+      if (this.map.getLayer("lyrSimplifys")) {
+        this.map.moveLayer("lyrGeofences", "lyrSimplifys");
+      }
     },
     _observerEvents: function() {
       var self = this;
@@ -56,7 +67,7 @@ export default {
         self.map.on("click", "lyrGeofences", function(event) {
           self.gjGeofences.features.forEach(function(feature, i) {
             if (event.features[0].properties._id == feature.properties._id) {
-              eventBus.$emit("initSimplify", feature);//Iniciar el proceso de simplificacion
+              eventBus.$emit("initSimplify", feature); //Iniciar el proceso de simplificacion
             }
           });
         });
@@ -74,7 +85,7 @@ export default {
     }
   },
   mounted() {
-    var self =this;
+    var self = this;
     //Actualiza el mapa cuando se crea una nueva geofence
     eventBus.$on("newGeofence", function(featureCollection) {
       featureCollection.features.forEach(feature => {

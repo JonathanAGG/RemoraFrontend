@@ -1,10 +1,14 @@
 <template>
   <div class="zeus">
-      <div id="map"></div>
-      <alerts></alerts>
+      <div id="map">
+        <simplify-control v-bind:objMap="map"></simplify-control>
+      </div>
+  
+      <squares v-bind:objMap="map"></squares>
       <geofences v-bind:objMap="map"></geofences>
       <simplifys v-bind:objMap="map"></simplifys>
       <simplify-process></simplify-process>
+      <alerts></alerts>
   </div>
 </template>
 
@@ -15,15 +19,18 @@ import mapboxgl from "mapbox-gl";
 import Alerts from "../common/Alerts";
 import Geofences from "../common/Geofences";
 import Simplifys from "../common/Simplifys";
+import Squares from "../common/Squares";
 import SimplifyProcess from "./SimplifyProcess";
+import SimplifyControl from "./SimplifyControl";
 export default {
   name: "MapGeofence",
   components: {
     Alerts,
     Geofences,
     Simplifys,
-    SimplifyProcess
-    
+    Squares,
+    SimplifyProcess,
+    SimplifyControl
   },
   data() {
     return {
@@ -45,7 +52,8 @@ export default {
     }
   },
   mounted() {
-    this._loadMap()
+    this._loadMap();
+   
   }
 };
 </script>

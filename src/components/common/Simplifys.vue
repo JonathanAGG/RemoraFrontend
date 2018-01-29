@@ -9,7 +9,10 @@ export default {
   data() {
     return {
       map: Object,
-      gjSimplifys: Object
+      gjSimplifys: {
+        type: "FeatureCollection",
+        features: []
+      }
     };
   },
   methods: {
@@ -49,7 +52,7 @@ export default {
         }
       });
     },
-/*     _observerEvents: function() {
+    /*     _observerEvents: function() {
       var self = this;
       self.map.on("load", () => {
         self.map.on("click", "lyrSimplifys", function(event) {
@@ -74,11 +77,16 @@ export default {
     }
   },
   mounted() {
-    var self =this;
+    var self = this;
     //Actualiza el mapa cuando se crea una nueva geofence
-    eventBus.$on("newSimplify", function(feature) {
+    eventBus.$on("newSimplify", function(newFeature) {
+      self.gjSimplifys.features.forEach(element => {
+        if (newFeature.properties._id == element.properties._id) {
+          element.geometry.coordinates[0] = newFeature.geometry.coordinates[0];
+        }
+      });
 
-      self.gjSimplifys.features.push(feature);
+      self.gjSimplifys.features.push(newFeature);
       self._updateSimplifys(self.gjSimplifys);
     });
   }

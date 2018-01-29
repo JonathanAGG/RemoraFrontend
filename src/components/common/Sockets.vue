@@ -18,6 +18,11 @@ export default {
     this.socket.on("newPoint", function(point) {
       eventBus.$emit("sockNewPoint", point);
     });
+
+    //Socket que optiene los cuadros despues de simplificar una geofence
+    this.socket.on("newSquares", function(featureCollection) {
+      eventBus.$emit("sockNewSquares", featureCollection);
+    });
   }
 };
 </script>

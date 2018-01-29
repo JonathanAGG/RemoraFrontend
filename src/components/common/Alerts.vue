@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div id="alerts">
     <transition name="fade">
       <div class="alert-fix alert alert-success" v-show="isSuccess">
           <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
@@ -70,5 +70,9 @@ export default {
 }
 .fade-enter, .fade-leave-to{
   opacity: 0;
+}
+
+#alerts{
+  z-index: 2;
 }
 </style>

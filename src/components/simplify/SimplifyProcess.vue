@@ -108,7 +108,7 @@ export default {
           }
         });
 
-        //Load geofence
+        //Load simplify geofence
         self.map.addSource("scSimplify", {
           type: "geojson",
           data: self.gjOriginal
@@ -169,11 +169,18 @@ export default {
     },
     _saveSimplify: function() {
       var self =this;
+
+      if(self.gjSimplify.geometry.coordinates.length ==0 ){
+         $("#simplifyModal").modal("hide");
+        eventBus.$emit("dangerAlert", 'Debe simplificar la geofence primero');
+      }else{
       //Envia la geofence simplificada al server para almacenarla
       axios
         .put(process.env.HTTP_SERVER_URL + "geofences/"+this.gjOriginal.properties._id+"/simplifys", this.gjSimplify)
         .then(function(response) {
           $("#simplifyModal").modal("hide");
+
+          self.gjSimplify['properties'] = self.gjOriginal.properties
           eventBus.$emit("newSimplify", self.gjSimplify); //Actializa el mapa
           eventBus.$emit("successAlert", "Saved Simplify."); //Mostrar mensaje de exito 
         })
@@ -181,6 +188,8 @@ export default {
           eventBus.$emit("dangerAlert", error); //Mostrar mensaje de error
           console.log("err", error);
         });
+
+        }
     }
   },
   watch: {
