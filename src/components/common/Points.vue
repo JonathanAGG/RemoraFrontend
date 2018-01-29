@@ -3,6 +3,7 @@
 <script>
 import axios from "axios";
 import eventBus from "../../eventBus";
+import mapboxgl from "mapbox-gl";
 export default {
   name: "Points",
   props: ["objMap"],
@@ -48,6 +49,69 @@ export default {
           "text-anchor": "top",
           "icon-rotate": { type: "identity", property: "Head" }
         }
+      });
+      this._createPopUps()
+    },
+    _createPopUps: function() {
+
+      var self = this;
+
+      var popup = new mapboxgl.Popup({
+        closeButton: false,
+        closeOnClick: false
+      });
+
+       self.map.on("mouseenter", "lyrPoints", function(e) {
+
+        var dRemora = e.features[0].properties.dateRemora,
+          dServer = e.features[0].properties.dateServer;
+
+        self.map.getCanvas().style.cursor = "pointer";
+
+        popup
+          .setLngLat(e.features[0].geometry.coordinates)
+          .setHTML(
+            "<strong>Date Remora: </strong>" +
+              dRemora.slice(8, 10) +
+              "/" +
+              dRemora.slice(5, 7) +
+              "/" +
+              dRemora.slice(0, 4) +
+              " - " +
+              dRemora.slice(11, 16) +
+              "<br><strong>Date Server: </strong>" +
+              dServer.slice(8, 10) +
+              "/" +
+              dServer.slice(5, 7) +
+              "/" +
+              dServer.slice(0, 4) +
+              " - " +
+              dServer.slice(11, 16) +
+              "<br><strong>GPS View: </strong>" +
+              e.features[0].properties.GPSView +
+              "<br><strong>GPS Used: </strong>" +
+              e.features[0].properties.GNSS_used +
+              "<br><strong>Motor: </strong>" +
+              e.features[0].properties.Motor +
+              "<br><strong>Qt: </strong>" +
+              e.features[0].properties.QuadTree +
+              "<br><strong>Lat: </strong>" +
+              e.features[0].geometry.coordinates[1].toFixed(6) +
+              "<br><strong>Lon: </strong>" +
+              e.features[0].geometry.coordinates[0].toFixed(6) +
+              "<br><strong>Δ Time: </strong>" +
+              e.features[0].properties.deltaTime +
+              " min" +
+              "<br><strong>Δ Distance: </strong>" +
+              e.features[0].properties.deltaDistance.toFixed(3) +
+              " km"
+          )
+          .addTo(self.map);
+      });
+
+      self.map.on("mouseleave", "lyrPoints", function() {
+        self.map.getCanvas().style.cursor = "";
+        popup.remove();
       });
     },
     _updatePoints: function(featureCollection) {
