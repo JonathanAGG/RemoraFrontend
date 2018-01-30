@@ -51,7 +51,6 @@ export default {
       chart: Object,
       initDate: null,
       endDate: null,
-      HTTP_SERVER_URL: process.env.HTTP_SERVER_URL,
       configDatePicker: {
         allowInputToggle: true
       }
@@ -64,7 +63,7 @@ export default {
       /* Get Filter */
       axios
         .request({
-          url: this.HTTP_SERVER_URL + "zeus/points/" + this.initDate + "&" + this.endDate,
+          url: process.env.HTTP_SERVER_URL+ "zeus/points/" + this.initDate + "&" + this.endDate,
           method: "get",
           responseType: "json",
           data: {},

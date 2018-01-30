@@ -15,8 +15,7 @@ export default {
   data() {
     return {
       map: Object,
-      draw: Object,
-      HTTP_SERVER_URL: process.env.HTTP_SERVER_URL
+      draw: Object
     };
   },
   methods: {
@@ -68,9 +67,9 @@ export default {
         let self = this;
         //Envia la geofence al server para almacenarla
         axios
-          .post(self.HTTP_SERVER_URL + "geofences", this.draw.getAll())
+          .post(process.env.HTTP_SERVER_URL + "geofences", this.draw.getAll())
           .then(function(response) {
-            eventBus.$emit("newGeofence", self.draw.getAll()); //Actializa el mapa
+            eventBus.$emit("initGeofence"); //Actializa el mapa
             eventBus.$emit("successAlert", "Saved Geofence."); //Mostrar mensaje de exito
             self.draw.deleteAll().getAll();
           })

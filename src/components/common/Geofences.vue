@@ -9,46 +9,49 @@ export default {
   data() {
     return {
       map: Object,
-      gjGeofences: Object,
-      HTTP_SERVER_URL: process.env.HTTP_SERVER_URL
+      gjGeofences: Object
     };
   },
   methods: {
     _initGeofences: function(map) {
       var self = this;
-      this.map.on("load", () => {
-        /* Get Geofences */
-        axios
-          .request({
-            url: this.HTTP_SERVER_URL + "geofences",
-            method: "get",
-            responseType: "json",
-            data: {},
-            header: {
-              "Content-Type": "application/json"
-            }
-          })
-          .then(response => {
-            self.gjGeofences = response.data;
-            self._displayGeofences(response.data);
-          });
-      });
+
+      /* Get Geofences */
+      axios
+        .request({
+          url: process.env.HTTP_SERVER_URL + "geofences",
+          method: "get",
+          responseType: "json",
+          data: {},
+          header: {
+            "Content-Type": "application/json"
+          }
+        })
+        .then(response => {
+          self.gjGeofences = response.data;
+          self._displayGeofences(response.data);
+          eventBus.$emit("initGeofenceList", response.data); //Cargar la lista de grofences
+        });
     },
     _displayGeofences: function(featureCollection) {
-      this.map.addSource("scGeofences", {
-        type: "geojson",
-        data: this.gjGeofences
-      });
-      this.map.addLayer({
-        id: "lyrGeofences",
-        type: "fill",
-        source: "scGeofences",
-        layout: {},
-        paint: {
-          "fill-color": "#088",
-          "fill-opacity": 0.8
-        }
-      });
+      if (this.map.getSource("scGeofences")) {
+        this._updateGeofences(featureCollection);
+      } else {
+        this.map.addSource("scGeofences", {
+          type: "geojson",
+          data: featureCollection
+        });
+        this.map.addLayer({
+          id: "lyrGeofences",
+          type: "fill",
+          source: "scGeofences",
+          layout: {},
+          paint: {
+            "fill-color": "#088",
+            "fill-opacity": 0.8
+          }
+        });
+      }
 
       if (
         this.map.getLayer("lyrSquares") &&
@@ -63,13 +66,11 @@ export default {
     },
     _observerEvents: function() {
       var self = this;
-      self.map.on("load", () => {
-        self.map.on("click", "lyrGeofences", function(event) {
-          self.gjGeofences.features.forEach(function(feature, i) {
-            if (event.features[0].properties._id == feature.properties._id) {
-              eventBus.$emit("initSimplify", feature); //Iniciar el proceso de simplificacion
-            }
-          });
+      self.map.on("click", "lyrGeofences", function(event) {
+        self.gjGeofences.features.forEach(function(feature, i) {
+          if (event.features[0].properties._id == feature.properties._id) {
+            eventBus.$emit("initSimplify", feature); //Iniciar el proceso de simplificacion
+          }
         });
       });
     },
@@ -80,8 +81,10 @@ export default {
   watch: {
     objMap: function(objMap) {
       this.map = objMap;
-      this._initGeofences();
-      this._observerEvents();
+      this.map.on("load", () => {
+        this._initGeofences();
+        this._observerEvents();
+      });
     }
   },
   mounted() {
@@ -92,6 +95,10 @@ export default {
         self.gjGeofences.features.push(feature);
       });
       self._updateGeofences(self.gjGeofences);
+    });
+
+    eventBus.$on("initGeofence", function() {
+      self._initGeofences();
     });
   }
 };

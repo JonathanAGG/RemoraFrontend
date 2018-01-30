@@ -23,6 +23,11 @@ export default {
     this.socket.on("newSquares", function(featureCollection) {
       eventBus.$emit("sockNewSquares", featureCollection);
     });
+
+    //Socket para recibir las alertas
+    this.socket.on("alert", function(alert) {
+        eventBus.$emit("sockAlertGeofence", alert);
+    });
   }
 };
 </script>

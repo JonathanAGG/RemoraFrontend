@@ -52,19 +52,6 @@ export default {
         }
       });
     },
-    /*     _observerEvents: function() {
-      var self = this;
-      self.map.on("load", () => {
-        self.map.on("click", "lyrSimplifys", function(event) {
-          self.gjSimplifys.features.forEach(function(feature, i) {
-            if (event.features[0].properties._id == feature.properties._id) {
-              console.log('ak7',feature)
-              eventBus.$emit("initSimplify", feature);//Iniciar el proceso de simplificacion
-            }
-          });
-        });
-      });
-    }, */
     _updateSimplifys: function(featureCollection) {
       this.map.getSource("scSimplifys").setData(featureCollection);
     }

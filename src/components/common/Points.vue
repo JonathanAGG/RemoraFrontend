@@ -10,8 +10,7 @@ export default {
   data() {
     return {
       map: Object,
-      gjPoints: Object,
-      HTTP_SERVER_URL: process.env.HTTP_SERVER_URL
+      gjPoints: Object
     };
   },
   methods: {
@@ -21,7 +20,7 @@ export default {
         /* Get Points */
         axios
           .request({
-            url: this.HTTP_SERVER_URL + "zeus/points",
+            url: process.env.HTTP_SERVER_URL + "zeus/points",
             method: "get",
             responseType: "json",
             data: {},
@@ -116,6 +115,7 @@ export default {
     },
     _updatePoints: function(featureCollection) {
       this.map.getSource("scPoints").setData(featureCollection);
+      this._createPopUps()
     }
   },
   watch: {

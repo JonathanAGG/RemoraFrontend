@@ -20,12 +20,11 @@
 </template>
 
 <script>
-import io from "socket.io-client";
+import eventBus from "../../eventBus";
 export default {
   name: "AlertGeofence",
   data() {
     return {
-      socket: io(process.env.SOCKET_SERVER_URL),
       message: ""
     };
   },
@@ -34,10 +33,10 @@ export default {
   mounted() {
     var self = this;
 
-    //Socket para recibir las alertas
-    this.socket.on("alert", function(alert) {
-        self.message = 'La embarcación '+alert.point.properties.ID+' ha ingresado a la geofence '+alert.geofence.properties.description
-        $("#alertModal").modal("show");
+    //Socket que recibe las alertas de violacion de geofences
+    eventBus.$on("sockAlertGeofence", function(alert) {
+      self.message = 'La embarcación '+alert.point.properties.ID+' ha ingresado a la geofence '+alert.geofence.properties.description
+      $("#alertModal").modal("show");
     });
   }
 };

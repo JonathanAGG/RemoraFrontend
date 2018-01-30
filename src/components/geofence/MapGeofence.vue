@@ -1,12 +1,13 @@
 <template>
   <div class="zeus">
-      <alerts></alerts>
+      
       <div id="map"> 
         <geofence-control v-bind:objMap="map"></geofence-control>
       </div>
-
       <geofences v-bind:objMap="map"></geofences>
+      <geofence-list v-bind:objMap="map"></geofence-list>
       <import-geofence></import-geofence>
+      <alerts></alerts>
   </div>
 </template>
 
@@ -18,13 +19,15 @@ import Alerts from "../common/Alerts";
 import Geofences from "../common/Geofences";
 import ImportGeofence from "./ImportGeofence";
 import GeofenceControl from "./GeofenceControl";
+import GeofenceList from "./GeofenceList";
 export default {
   name: "MapGeofence",
   components: {
     Alerts,
     Geofences,
     GeofenceControl,
-    ImportGeofence
+    ImportGeofence,
+    GeofenceList
   },
   data() {
     return {

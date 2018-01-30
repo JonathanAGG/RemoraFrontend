@@ -36,8 +36,7 @@ export default {
     return {
       file: Object,
       showImportBtn: false,
-      isSuccess: false,
-      HTTP_SERVER_URL: process.env.HTTP_SERVER_URL
+      isSuccess: false
     };
   },
   methods: {
@@ -69,10 +68,10 @@ export default {
       let self = this;
       //Envia la geofence al server para almacenarla
       axios
-        .post(this.HTTP_SERVER_URL + "geofences", featureCollection)
+        .post(process.env.HTTP_SERVER_URL + "geofences", featureCollection)
         .then(function(response) {
           $("#importGeofenceModal").modal("hide");
-          eventBus.$emit("newGeofence", featureCollection); //Actializa el mapa
+          eventBus.$emit("initGeofence"); //Actializa el mapa
           eventBus.$emit("successAlert", "Saved Geofence."); //Mostrar mensaje de exito
         })
         .catch(function(error) {

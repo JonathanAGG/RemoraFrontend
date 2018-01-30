@@ -9,8 +9,7 @@ export default {
   data() {
     return {
       map: Object,
-      gjLines: Object,
-      HTTP_SERVER_URL: process.env.HTTP_SERVER_URL
+      gjLines: Object
     };
   },
   methods: {
@@ -20,7 +19,7 @@ export default {
         /* Get Lines */
         axios
           .request({
-            url: this.HTTP_SERVER_URL + "zeus/lines",
+            url: process.env.HTTP_SERVER_URL + "zeus/lines",
             method: "get",
             responseType: "json",
             data: {},
