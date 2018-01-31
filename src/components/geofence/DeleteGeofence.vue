@@ -13,7 +13,7 @@
                   Do you really want to delete the geofence {{selectedFeature.properties.description}}?
                 </div>
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-default" data-dismiss="modal">NO</button>
+                  <button type="button" class="btn btn-default" data-dismiss="modal" @click="_resetZoom()">NO</button>
                   <button type="button" class="btn btn-primary" @click="_deleteGeofence()">Yes</button>
                 </div>
             </div>

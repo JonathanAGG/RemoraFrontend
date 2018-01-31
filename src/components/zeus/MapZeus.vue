@@ -3,11 +3,13 @@
       <div id="map"> 
         <zeus-control v-bind:objMap="map"></zeus-control>
       </div>
+      <devices-list v-bind:objMap="map"></devices-list>
       <points v-bind:objMap="map"></points>
       <lines v-bind:objMap="map"></lines>
       <geofences v-bind:objMap="map"></geofences>
       <stats></stats>
       <alert-geofence></alert-geofence>
+
   </div>
 </template>
 
@@ -15,8 +17,9 @@
 import mapboxgl from "mapbox-gl";
 
 import Stats from "./Stats";
-import AlertGeofence from "../common/AlertGeofence";
 import ZeusControl from "./ZeusControl";
+import DevicesList from "./DevicesList";
+import AlertGeofence from "../common/AlertGeofence";
 import Points from "../common/Points";
 import Lines from "../common/Lines";
 import Geofences from "../common/Geofences";
@@ -29,7 +32,8 @@ export default {
     Points,
     Lines,
     Geofences,
-    ZeusControl
+    ZeusControl,
+    DevicesList
   },
   data() {
     return {

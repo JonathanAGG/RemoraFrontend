@@ -3,33 +3,33 @@
 <table class="table table-hover">
     <thead>
       <tr>
-        <th>Geofences List</th>
+        <th>Devices List</th>
       </tr>
     </thead>
     <tbody>
-      <tr v-for="feature in gjGeofences.features">
+      <tr v-for="feature in gjPoints.features">
         <td>{{feature.properties.description}}</td>
         <td> <a href="javascript:void(0)" @click="_flyToFeature(feature)"><span class="glyphicon glyphicon-eye-open"></span></a> </td>
-        <td> <a href="javascript:void(0)" @click="_preDelete(feature)"><span class="glyphicon glyphicon-trash"></span></a> </td>
+        <!-- <td> <a href="javascript:void(0)" @click="_preDelete(feature)"><span class="glyphicon glyphicon-trash"></span></a> </td> -->
       </tr>
     </tbody>
   </table>
-  <delete-geofence v-bind="{objMap:map, selectedFeature}"></delete-geofence>
+
 
   </div>
 </template>
 <script>
 import axios from "axios";
 import eventBus from "../../eventBus";
-import DeleteGeofence from "./DeleteGeofence"
+
 export default {
-  name: "GeofencesList",
+  name: "DevicesList",
   props: ["objMap"],
-  components:{DeleteGeofence},
+  components:{},
   data() {
     return {
       map: Object,
-      gjGeofences: Object,
+      gjPoints: Object,
       selectedFeature: {
         type: "feature",
         geometry: {},
@@ -51,17 +51,6 @@ export default {
           padding: { top: 10, bottom: 25, left: 15, right: 5 }
         });
       }, 500);
-    },
-    _preDelete: function(feature) {
-      var self = this;
-      this.selectedFeature = feature;
-      //Fly to geofence
-      var bbox = turf.bbox(feature);
-      self.map.fitBounds(bbox, {
-        padding: { top: 10, bottom: 25, left: 15, right: 5 }
-      });
-      //Open confirm modal
-        $("#confirmDeleteModal").modal("show");
     }
   },
   watch: {
@@ -72,8 +61,9 @@ export default {
   mounted() {
     var self = this;
     //Recibe los datos desde [GeofencesComponent] para cargar la lista
-    eventBus.$on("initGeofenceList", function(featureCollection) {
-      self.gjGeofences = featureCollection;
+    eventBus.$on("initDevicesList", function(featureCollection) {
+        console.log('initD', featureCollection)
+      self.gjPoints = featureCollection;
     });
   }
 };

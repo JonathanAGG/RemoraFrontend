@@ -32,6 +32,7 @@ export default {
             self.gjPoints = response.data;
             self._displayPoints(response.data);
             eventBus.$emit("initChart", response.data); //Envia los datos al componente chart para cargar el grafico
+            eventBus.$emit("initDevicesList", response.data); //Cargar la lista de dispositivos
           });
       });
     },
