@@ -1,11 +1,10 @@
 <template>
   <!-- Filter inputs -->
                     <div class="row">
-                        <div class='col-md-4 col-md-offset-1 col-sm-12'>
+                        <div class='col-md-5 col-md-offset-1 col-sm-12'>
                             <div class="form-group">
-                                <label for="date-time-input">Init Date</label>
                                 <div class="input-group date">
-                                    <date-picker v-model="initDate" id="date-time-input" :wrap="true" :config="configDatePicker">
+                                    <date-picker placeholder="Init Date" v-model="initDate" id="date-time-input" :wrap="true" :config="configDatePicker">
                                     </date-picker>
                                     <div class="input-group-addon">
                                         <span class="glyphicon glyphicon-calendar"></span>
@@ -13,23 +12,14 @@
                                 </div>
                             </div>
                         </div>
-                        <div class='col-md-4 col-sm-12'>
+                        <div class='col-md-5 col-sm-12'>
                             <div class="form-group">
-                                <label for="date-time-input">End Date</label>
                                 <div class="input-group date">
-                                    <date-picker v-model="endDate" id="date-time-input" :wrap="true" :config="configDatePicker">
+                                    <date-picker placeholder="End Date" v-model="endDate" id="date-time-input" :wrap="true" :config="configDatePicker">
                                     </date-picker>
                                     <div class="input-group-addon">
                                         <span class="glyphicon glyphicon-calendar"></span>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class='col-md-2 col-sm-12'>
-                            <div class="form-group" style="margin-top: 25px;">
-                                <div class="input-group date">
-                                  <button type="button" class="btn btn-default" @click="filter()">Filter</button>
                                 </div>
                             </div>
                         </div>
@@ -76,6 +66,15 @@ export default {
           eventBus.$emit("filterData", response.data);
         });
     }
+  },
+  watch : {
+
+      initDate: function(newInitDate){
+         eventBus.$emit("refreshDates", {initDate:newInitDate, endDate:this.endDate});
+      },
+      endDate: function(newEndDate){
+         eventBus.$emit("refreshDates", {initDate:this.initDate, endDate:newEndDate});
+      }
   }
 };
 </script> 

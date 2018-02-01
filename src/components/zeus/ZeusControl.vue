@@ -2,9 +2,6 @@
       <div class="content">
        
         <div id="dash-rigth">
-            <button class="btn btn-default" data-toggle="modal" data-target="#statsModal" title="Stats">
-                <span class="glyphicon glyphicon-stats"></span>
-            </button>
             <button class="btn btn-default" title="Draw Lines" @click="drawLines">
                 <span class="glyphicon glyphicon-resize-horizontal"></span>
             </button>

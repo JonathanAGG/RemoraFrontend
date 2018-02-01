@@ -71,7 +71,9 @@ export default {
         popup
           .setLngLat(e.features[0].geometry.coordinates)
           .setHTML(
-            "<strong>Date Remora: </strong>" +
+            "<strong>ID: </strong>" +
+              e.features[0].properties.ID +
+              "<br><strong>Date Remora: </strong>" +
               dRemora.slice(8, 10) +
               "/" +
               dRemora.slice(5, 7) +
