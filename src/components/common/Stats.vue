@@ -23,8 +23,6 @@
 import eventBus from "../../eventBus"; //EventBus
 import axios from "axios";
 
-import FilterDate from "./FilterDate";
-
 //Highcharts
 var Highcharts = require("highcharts/highstock");
 require("highcharts/modules/map")(Highcharts);
@@ -181,11 +179,10 @@ export default {
 
     //Evento desde DeviceList para cargar el chart con los datos del despositivo seleccionado
     eventBus.$on("initStats", function(deviceId) {
-      console.log('ww')
       //Obtiene los datos del dispositivo seleccionado
       axios
         .request({
-          url: process.env.HTTP_SERVER_URL + "zeus/devices/" + deviceId,
+          url: process.env.HTTP_SERVER_URL + "devices/" + deviceId+"/features",
           method: "get",
           responseType: "json",
           data: {},
@@ -194,7 +191,6 @@ export default {
           }
         })
         .then(response => {
-          console.log("resp1", response.data);
           self.formatData(response.data.features).then(data => {
             self.drawCharts(data);
           });

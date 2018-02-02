@@ -1,5 +1,5 @@
 <template>
-<div style="margin-top:2%">
+<div id="geofencesList">
 <table class="table table-hover">
     <thead>
       <tr>
@@ -78,3 +78,11 @@ export default {
   }
 };
 </script>
+<style>
+#geofencesList {
+  margin: 2% 0% 2%;
+  padding: 2%;
+  border: 1px solid rgb(226, 226, 226);
+  border-radius: 3px;
+}
+</style>

@@ -17,7 +17,9 @@
           </div>
         </td>
         <td>{{device.ID}}</td>
-        <td> <a href="javascript:void(0)" @click="_openStats(device.ID)"><span class="glyphicon glyphicon-stats"></span></a> </td>
+        <td> <a href="javascript:void(0)" @click="_openStats(device.ID)" title="Stats">Stats</a> </td>
+        <td> <a href="javascript:void(0)" @click="_flyToFeature(device.ID)" title="View">View</a> </td>
+        <td> <router-link :to="{ name: 'DeviceDetail', params: { id: device.ID }}"  title="Details">Details</router-link></td>
       </tr>
       <tr>
         <td>
@@ -26,6 +28,8 @@
           </div>
         </td>
         <td>All</td>
+        <td></td>
+        <td></td>
         <td></td>
       </tr>
 
@@ -43,14 +47,12 @@ import axios from "axios";
 import eventBus from "../../eventBus";
 import FilterDate from "./FilterDate";
 import Alerts from "../common/Alerts";
-import Stats from "./Stats";
+import Stats from "../common/Stats";
 export default {
-  name: "DevicesList",
-  props: ["objMap"],
+  name: "FilterDevices",
   components: { FilterDate, Alerts, Stats },
   data() {
     return {
-      map: Object,
       devices: Object,
       selectedDevices: [],
       initDate: "",
@@ -61,13 +63,12 @@ export default {
     _checkEvent: function() {
       console.log("_checkEvent", this.selectedDevices);
     },
-    _initDevices: function(map) {
+    _initDevices: function() {
       var self = this;
-      this.map.on("load", () => {
         /* Get Points */
         axios
           .request({
-            url: process.env.HTTP_SERVER_URL + "zeus/devices",
+            url: process.env.HTTP_SERVER_URL + "devices",
             method: "get",
             responseType: "json",
             data: {},
@@ -78,9 +79,7 @@ export default {
           .then(response => {
             self.devices = response.data;
             self.selectAll = true;
-            console.log("resp", response.data);
           });
-      });
     },
     _filter: function() {
       var self = this;
@@ -101,18 +100,15 @@ export default {
         });
     },
     _openStats: function(deviceId) {
-      console.log('qq')
       eventBus.$emit("initStats", deviceId);
-    }
-  },
-  watch: {
-    objMap: function(objMap) {
-      this.map = objMap;
-      this._initDevices();
+    },
+    _flyToFeature: function(deviceId){
+      eventBus.$emit('flyToFeature', deviceId);
     }
   },
   mounted() {
     var self = this;
+    this._initDevices();
     //Recibe las fechas de componente [FilterDate]
     eventBus.$on("refreshDates", function(dates) {
       self.initDate = dates.initDate;

@@ -41,7 +41,7 @@ export default {
       setTimeout(() => {
         self.messageAlert = "";
         self.isSuccess = false;
-      }, 3000);
+      }, 4000);
     });
 
     eventBus.$on("dangerAlert", function(message) {
@@ -50,7 +50,7 @@ export default {
       setTimeout(() => {
         self.messageAlert = "";
         self.isDanger = false;
-      }, 3000);
+      }, 4000);
     });
   }
 };

@@ -51,6 +51,16 @@ export default {
     },
     _updateLines: function(featureCollection) {
       this.map.getSource("scLines").setData(featureCollection);
+    },
+    _flyToFeature: function(deviceId) {
+      this.gjLines.features.forEach(feature => {
+        if (feature.properties.ID == deviceId) {
+            var bbox = turf.bbox(feature);
+            this.map.fitBounds(bbox, {
+              padding: { top: 10, bottom: 25, left: 15, right: 5 }
+            });
+        }
+      });
     }
   },
   watch: {
@@ -73,6 +83,11 @@ export default {
     //Evento de filtracion de datos
     eventBus.$on("filterData", function(data) {
       self._updateLines(data.gjLines);
+    });
+
+    //Visualizar un dispositivo en especifico
+    eventBus.$on("flyToFeature", function(deviceId) {
+      self._flyToFeature(deviceId);
     });
   }
 };

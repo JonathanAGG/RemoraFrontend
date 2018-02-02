@@ -4,7 +4,7 @@
                         <div class='col-md-5 col-md-offset-1 col-sm-12'>
                             <div class="form-group">
                                 <div class="input-group date">
-                                    <date-picker placeholder="Init Date" v-model="initDate" id="date-time-input" :wrap="true" :config="configDatePicker">
+                                    <date-picker placeholder="Initial Date" v-model="initDate" id="date-time-input" :wrap="true" :config="configDatePicker">
                                     </date-picker>
                                     <div class="input-group-addon">
                                         <span class="glyphicon glyphicon-calendar"></span>
@@ -15,7 +15,7 @@
                         <div class='col-md-5 col-sm-12'>
                             <div class="form-group">
                                 <div class="input-group date">
-                                    <date-picker placeholder="End Date" v-model="endDate" id="date-time-input" :wrap="true" :config="configDatePicker">
+                                    <date-picker placeholder="Final Date" v-model="endDate" id="date-time-input" :wrap="true" :config="configDatePicker">
                                     </date-picker>
                                     <div class="input-group-addon">
                                         <span class="glyphicon glyphicon-calendar"></span>

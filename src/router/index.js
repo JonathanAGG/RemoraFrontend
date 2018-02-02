@@ -4,6 +4,10 @@ import MapZeus from '@/components/zeus/MapZeus'
 import MapGeofence from '@/components/geofence/MapGeofence'
 import MapSimplify from '@/components/simplify/MapSimplify'
 
+import DeviceList from '@/components/devices/DeviceList'
+import DeviceDetail from '@/components/devices/DeviceDetail'
+import DeviceEdit from '@/components/devices/DeviceEdit'
+
 Vue.use(Router)
 
 export default new Router({
@@ -22,6 +26,21 @@ export default new Router({
       path: '/simplify',
       name: 'MapSimplify',
       component: MapSimplify
+    },
+    {
+      path: '/devices',
+      name: 'DeviceList',
+      component: DeviceList
+    },
+    {
+      path: '/devices/:id',
+      name: 'DeviceDetail',
+      component: DeviceDetail
+    },
+    {
+      path: '/devices/:id/edit',
+      name: 'DeviceEdit',
+      component: DeviceEdit
     }
   ]
 })
