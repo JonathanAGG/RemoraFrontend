@@ -10,7 +10,7 @@
                     <h4 class="modal-title" id="ModalLabel">Delete</h4>
                 </div>
                 <div class="modal-body">
-                  Do you really want to delete the geofence {{geofenceDelete.description}}?
+                  Do you really want to delete the geofence {{deleteGeofence.description}}?
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-default" data-dismiss="modal" @click="_resetZoom()">NO</button>
@@ -24,8 +24,8 @@
 import axios from "axios";
 import eventBus from "../../eventBus";
 export default {
-  name: "Geofences",
-  props: ["objMap", "geofenceDelete"],
+  name: "DeleteGeofence",
+  props: ["objMap", "deleteGeofence"],
   data() {
     return {
       map: Object
@@ -35,7 +35,7 @@ export default {
     _deleteGeofence: function() {
       var self = this;
       axios
-        .delete(process.env.HTTP_SERVER_URL+"geofences/"+this.geofenceDelete._id)
+        .delete(process.env.HTTP_SERVER_URL+"geofences/"+this.deleteGeofence._id)
         .then(function(response) {
 
           $("#confirmDeleteModal").modal("hide");

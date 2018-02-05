@@ -23,7 +23,7 @@
           <a v-if="device.isOperating" href="javascript:void(0)" @click="_openStats(device.ID)" title="Stats">Stats</a>
           <div v-else>Stats</div>
         </td>
-        <td><a href="javascript:void(0)" @click="_deleteDevice(device.ID)" title="Delete">Delete</a></td>
+        <td><a href="javascript:void(0)" @click="_preDelete(device)" title="Delete">Delete</a></td>
         <td title="Is Operating">  
           <div v-if="device.isOperating" class="cActive"></div>
           <div v-else class="cDisabled"></div> 
@@ -33,6 +33,7 @@
   </table>
       <alerts></alerts>
       <stats></stats>
+      <delete-device v-bind="{deleteDevice}"></delete-device>
   </div>
 </template>
 <script>
@@ -40,13 +41,15 @@ import axios from "axios";
 import eventBus from "../../eventBus";
 import Alerts from "../common/Alerts";
 import Stats from "../common/Stats";
+import DeleteDevice from "./DeleteDevice";
+
 export default {
   name: "DeviceList",
-  components: {Alerts, Stats },
+  components: {Alerts, Stats, DeleteDevice },
   data() {
     return {
       devices: Object,
-      selectedDevices: []
+      deleteDevice: Object
     };
   },
   methods: {
@@ -71,15 +74,19 @@ export default {
     _openStats: function(deviceId) {
       eventBus.$emit("initStats", deviceId);
     },
-    _deleteDevice : function(deviceId){
-
-      console.log('delete', deviceId)
+    _preDelete : function(device){
+      this.deleteDevice = device;
+      $("#confirmDeleteModal").modal("show");
 
     }
   },
   mounted() {
     var self = this;
     this._initDevices();
+
+    eventBus.$on("initDeviceList", function() {
+      self._initDevices();
+    });
   }
 };
 </script>

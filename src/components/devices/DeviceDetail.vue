@@ -6,38 +6,38 @@
 
   <div class=" list">
       
-      <div class="col-md-6"><strong>Device ID:</strong>  {{detail.ID}}</div>
-      <div class="col-md-6"><strong>Ship name:</strong>  {{detail.shipName}}</div>
+      <div class="col-md-6 rowInfo"><strong>Device ID:</strong>  {{detail.ID}}</div>
+      <div class="col-md-6 rowInfo"><strong>Ship name:</strong>  {{detail.shipName}}</div>
 
-      <div class="col-md-6"><strong>Captaincy number:</strong>  {{detail.captaincyNumber}}</div>
-      <div class="col-md-6"><strong>Incopesca License:</strong>  {{detail.incopescaLicense}}</div>
+      <div class="col-md-6 rowInfo"><strong>Captaincy number:</strong>  {{detail.captaincyNumber}}</div>
+      <div class="col-md-6 rowInfo"><strong>Incopesca License:</strong>  {{detail.incopescaLicense}}</div>
 
-      <div class="col-md-6"><strong>CIAT number:</strong>  {{detail.ciatNumber}} </div>
-      <div class="col-md-6"><strong>Record:</strong>  {{detail.record}} </div>
+      <div class="col-md-6 rowInfo"><strong>CIAT number:</strong>  {{detail.ciatNumber}} </div>
+      <div class="col-md-6 rowInfo"><strong>Record:</strong>  {{detail.record}} </div>
 
-      <div class="col-md-6"><strong>Owner:</strong>  {{detail.owner}} </div>
-      <div class="col-md-6"><strong>Registration place:</strong>  {{detail.registrationPlace}} </div>
+      <div class="col-md-6 rowInfo"><strong>Owner:</strong>  {{detail.owner}} </div>
+      <div class="col-md-6 rowInfo"><strong>Registration place:</strong>  {{detail.registrationPlace}} </div>
 
-      <div class="col-md-6"><strong>Fishing zone:</strong>  {{detail.fishingZone}} </div>
-      <div class="col-md-6"><strong>Ship type:</strong>  {{detail.shipType}} </div>
+      <div class="col-md-6 rowInfo"><strong>Fishing zone:</strong>  {{detail.fishingZone}} </div>
+      <div class="col-md-6 rowInfo"><strong>Ship type:</strong>  {{detail.shipType}} </div>
 
-      <div class="col-md-6"><strong>Autonomy:</strong>  {{detail.autonomy}} </div>
-      <div class="col-md-6"><strong>Eslora (mts):</strong>  {{detail.eslora}} </div>
+      <div class="col-md-6 rowInfo"><strong>Autonomy:</strong>  {{detail.autonomy}} </div>
+      <div class="col-md-6 rowInfo"><strong>Eslora (mts):</strong>  {{detail.eslora}} </div>
 
-      <div class="col-md-6"><strong>Reason for request:</strong>  {{detail.requestReason}} </div>
-      <div class="col-md-6"><strong>Littoral zone:</strong>  {{detail.littoralZone}} </div>
+      <div class="col-md-6 rowInfo"><strong>Reason for request:</strong>  {{detail.requestReason}} </div>
+      <div class="col-md-6 rowInfo"><strong>Littoral zone:</strong>  {{detail.littoralZone}} </div>
 
-      <div class="col-md-6"><strong>Fleet:</strong>  {{detail.fleet}} </div>
-      <div class="col-md-6"><strong>Power:</strong>  {{detail.power}} </div>
+      <div class="col-md-6 rowInfo"><strong>Fleet:</strong>  {{detail.fleet}} </div>
+      <div class="col-md-6 rowInfo"><strong>Power:</strong>  {{detail.power}} </div>
 
-      <div class="col-md-6"><strong>Gross TM:</strong>  {{detail.grossTM}} </div>
-      <div class="col-md-6"><strong>Net TM:</strong>  {{detail.netTM}} </div>
+      <div class="col-md-6 rowInfo"><strong>Gross TM:</strong>  {{detail.grossTM}} </div>
+      <div class="col-md-6 rowInfo"><strong>Net TM:</strong>  {{detail.netTM}} </div>
 
-      <div class="col-md-6"><strong>Fishing allowed:</strong>  {{detail.fishingAllowed}} </div>
-      <div class="col-md-6"><strong>Issue date:</strong>  {{detail.issueDate}} </div>
+      <div class="col-md-6 rowInfo"><strong>Fishing allowed:</strong>  {{detail.fishingAllowed}} </div>
+      <div class="col-md-6 rowInfo"><strong>Issue date:</strong>  {{detail.issueDate}} </div>
 
-      <div class="col-md-6"><strong>Expiration date:</strong>  {{detail.expirationDate}} </div>
-      <div class="col-md-6"><strong>Status:</strong>  {{detail.status}} </div>
+      <div class="col-md-6 rowInfo"><strong>Expiration date:</strong>  {{detail.expirationDate}} </div>
+      <div class="col-md-6 rowInfo"><strong>Status:</strong>  {{detail.status}} </div>
 
     </div>
 </div>
@@ -99,7 +99,7 @@ export default {
   /* margin-top: 2%; */
 }
 
-.list div{
+.list .rowInfo{
 
   border-bottom: solid 1px rgba(223, 221, 221, 0.644);
   padding: 1% 3%

@@ -14,7 +14,7 @@
       </tr>
     </tbody>
   </table>
-  <delete-geofence v-bind="{objMap:map, geofenceDelete}"></delete-geofence>
+  <delete-geofence v-bind="{objMap:map, deleteGeofence}"></delete-geofence>
 
   </div>
 </template>
@@ -30,7 +30,7 @@ export default {
     return {
       map: Object,
       gjGeofences: Object,
-      geofenceDelete: ''
+      deleteGeofence: ''
     };
   },
   methods: {
@@ -47,7 +47,7 @@ export default {
     },
     _preDelete: function(feature) {
       var self = this;
-      this.geofenceDelete = feature.properties;
+      this.deleteGeofence = feature.properties;
       //Fly to geofence
       var bbox = turf.bbox(feature);
       self.map.fitBounds(bbox, {

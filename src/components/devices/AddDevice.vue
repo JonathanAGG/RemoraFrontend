@@ -204,7 +204,6 @@ export default {
       axios
         .post(process.env.HTTP_SERVER_URL + "devices", self.device)
         .then(function(response) {
-          console.log('ak7', response.data)
           eventBus.$emit("successAlert", "Device created."); //Mostrar mensaje de exito
         })
         .catch(function(error) {
