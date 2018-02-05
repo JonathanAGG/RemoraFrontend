@@ -1,7 +1,7 @@
 <template>
     <div id="deviceEdit" class="row">
 
-<form class="form-horizontal col-md-offset-1 col-md-9" v-on:submit="_onSubmit" action="#">
+<form class="form-horizontal col-md-offset-1 col-md-9" v-on:submit="_onSubmit" action="#" autocomplete="off">
 
   <div class="form-group">
     <label class="control-label col-sm-2" for="shipName">Ship name:</label>

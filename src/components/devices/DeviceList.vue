@@ -17,10 +17,18 @@
     <tbody>
       <tr v-for="device in devices">
         <td>{{device.ID}}</td>
-        <td> <a href="javascript:void(0)" @click="_openStats(device.ID)" title="Stats">Stats</a> </td>
         <td> <router-link :to="{ name: 'DeviceDetail', params: { id: device.ID }}"  title="Details">Details</router-link></td>
         <td> <router-link :to="{ name: 'EditDevice', params: { id: device.ID }}"  title="Details">Edit</router-link></td>
-      </tr>
+        <td> 
+          <a v-if="device.isOperating" href="javascript:void(0)" @click="_openStats(device.ID)" title="Stats">Stats</a>
+          <div v-else>Stats</div>
+        </td>
+        <td><a href="javascript:void(0)" @click="_deleteDevice(device.ID)" title="Delete">Delete</a></td>
+        <td title="Is Operating">  
+          <div v-if="device.isOperating" class="cActive"></div>
+          <div v-else class="cDisabled"></div> 
+        </td>
+     </tr>
     </tbody>
   </table>
       <alerts></alerts>
@@ -62,6 +70,11 @@ export default {
     },
     _openStats: function(deviceId) {
       eventBus.$emit("initStats", deviceId);
+    },
+    _deleteDevice : function(deviceId){
+
+      console.log('delete', deviceId)
+
     }
   },
   mounted() {
@@ -77,4 +90,23 @@ export default {
   border: 1px solid rgb(226, 226, 226);
   border-radius: 3px;
 }
+
+.cActive {
+  background-color: rgba(9, 255, 0, 0.733);
+  border: 1px solid #FFF;
+  border-radius: 18px;
+  box-shadow: 0 0 2px #888;
+  height: 8px;
+  width: 8px;
+}
+
+.cDisabled {
+  background-color: rgba(255, 8, 0, 0.733);
+  border: 1px solid #FFF;
+  border-radius: 18px;
+  box-shadow: 0 0 2px #888;
+  height: 8px;
+  width: 8px;
+}
+
 </style>

@@ -68,7 +68,7 @@ export default {
         /* Get Points */
         axios
           .request({
-            url: process.env.HTTP_SERVER_URL + "devices",
+            url: process.env.HTTP_SERVER_URL + "devices/operating",
             method: "get",
             responseType: "json",
             data: {},

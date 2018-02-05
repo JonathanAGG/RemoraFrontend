@@ -1,12 +1,12 @@
 <template>
     <div id="deviceEdit" class="row">
 
-<form class="form-horizontal col-md-offset-1 col-md-9" v-on:submit="_onSubmit" action="#">
+<form class="form-horizontal col-md-offset-1 col-md-9" v-on:submit="_onSubmit" action="#" autocomplete="off">
 
   <div class="form-group">
     <label class="control-label col-sm-2" for="ID">Device id:</label>
     <div class="col-sm-10">
-      <input type="text" class="form-control" id="ID" v-model="device.ID">
+      <input type="text" class="form-control" id="ID" v-model="device.ID" required>
     </div>
   </div>
 
@@ -169,7 +169,29 @@ export default {
   components: { Alerts },
   data() {
     return {
-      device: Object
+      device: {
+        ID:'',
+        shipName:'',
+        captaincyNumber:'',
+        incopescaLicense:'',
+        ciatNumber:'',
+        record:'',
+        owner:'',
+        registrationPlace:'',
+        fishingZone:'',
+        shipType:'',
+        autonomy:'',
+        eslora:'',
+        requestReason:'',
+        littoralZone:'',
+        fleet:'',
+        power:'',
+        grossTM:'',
+        netTM:'',
+        fishingAllowed:'',
+        issueDate:'',
+        expirationDate:''
+      }
     };
   },
   methods: {
@@ -183,10 +205,10 @@ export default {
         .post(process.env.HTTP_SERVER_URL + "devices", self.device)
         .then(function(response) {
           console.log('ak7', response.data)
-          eventBus.$emit("successAlert", "Device updated."); //Mostrar mensaje de exito
+          eventBus.$emit("successAlert", "Device created."); //Mostrar mensaje de exito
         })
         .catch(function(error) {
-          eventBus.$emit("dangerAlert", error); //Mostrar mensaje de error
+          eventBus.$emit("dangerAlert", error.response.data); //Mostrar mensaje de error
           console.log("err", error);
         });
     }

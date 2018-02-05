@@ -9,12 +9,12 @@
     <tbody>
       <tr v-for="feature in gjGeofences.features">
         <td>{{feature.properties.description}}</td>
-        <td> <a href="javascript:void(0)" @click="_flyToFeature(feature)"><span class="glyphicon glyphicon-eye-open"></span></a> </td>
-        <td> <a href="javascript:void(0)" @click="_preDelete(feature)"><span class="glyphicon glyphicon-trash"></span></a> </td>
+        <td> <a href="javascript:void(0)" @click="_flyToFeature(feature)">View</a> </td>
+        <td> <a href="javascript:void(0)" @click="_preDelete(feature)">Delete</a> </td>
       </tr>
     </tbody>
   </table>
-  <delete-geofence v-bind="{objMap:map, selectedFeature}"></delete-geofence>
+  <delete-geofence v-bind="{objMap:map, geofenceDelete}"></delete-geofence>
 
   </div>
 </template>
@@ -30,14 +30,7 @@ export default {
     return {
       map: Object,
       gjGeofences: Object,
-      selectedFeature: {
-        type: "feature",
-        geometry: {},
-        properties: {
-          _id: "",
-          description: ""
-        }
-      }
+      geofenceDelete: ''
     };
   },
   methods: {
@@ -54,7 +47,7 @@ export default {
     },
     _preDelete: function(feature) {
       var self = this;
-      this.selectedFeature = feature;
+      this.geofenceDelete = feature.properties;
       //Fly to geofence
       var bbox = turf.bbox(feature);
       self.map.fitBounds(bbox, {

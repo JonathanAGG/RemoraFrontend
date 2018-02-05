@@ -6,6 +6,9 @@ import router from './router'
 import 'bootstrap'
 import "bootstrap/dist/css/bootstrap.css";
 
+import VeeValidate from 'vee-validate';
+Vue.use(VeeValidate);
+
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
