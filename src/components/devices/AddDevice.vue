@@ -4,6 +4,13 @@
 <form class="form-horizontal col-md-offset-1 col-md-9" v-on:submit="_onSubmit" action="#">
 
   <div class="form-group">
+    <label class="control-label col-sm-2" for="ID">Device id:</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="ID" v-model="device.ID">
+    </div>
+  </div>
+
+  <div class="form-group">
     <label class="control-label col-sm-2" for="shipName">Ship name:</label>
     <div class="col-sm-10">
       <input type="text" class="form-control" id="shipName" v-model="device.shipName">
@@ -74,9 +81,9 @@
   </div>
 
   <div class="form-group">
-    <label class="control-label col-sm-2" for="length">Eslora (mts):</label>
+    <label class="control-label col-sm-2" for="eslora">Eslora (mts):</label>
     <div class="col-sm-10">
-      <input type="text" class="form-control" id="length" v-model="device.length">
+      <input type="text" class="form-control" id="eslora" v-model="device.eslora">
     </div>
   </div>
 
@@ -145,7 +152,7 @@
   
   <div class="form-group"> 
     <div class="col-sm-offset-2 col-sm-10">
-      <button type="submit" class="btn btn-default">Edit</button>
+      <button type="submit" class="btn btn-default">Create</button>
     </div>
   </div>
 </form>
@@ -158,7 +165,7 @@ import axios from "axios";
 import eventBus from "../../eventBus";
 import Alerts from "../common/Alerts";
 export default {
-  name: "DeviceEdit",
+  name: "newDevice",
   components: { Alerts },
   data() {
     return {
@@ -168,10 +175,12 @@ export default {
   methods: {
     _onSubmit: function(e) {
       e.preventDefault();
-
       let self = this;
+      console.log('request', self.device)
+
+      
       axios
-        .put(process.env.HTTP_SERVER_URL + "devices/"+ self.device.ID, self.device)
+        .post(process.env.HTTP_SERVER_URL + "devices", self.device)
         .then(function(response) {
           console.log('ak7', response.data)
           eventBus.$emit("successAlert", "Device updated."); //Mostrar mensaje de exito
@@ -180,32 +189,7 @@ export default {
           eventBus.$emit("dangerAlert", error); //Mostrar mensaje de error
           console.log("err", error);
         });
-    },
-    _initDetail: function() {
-      var self = this;
-      /* Get Detail */
-      axios
-        .request({
-          url:
-            process.env.HTTP_SERVER_URL +
-            "devices/" +
-            this.$route.params.id +
-            "/details",
-          method: "get",
-          responseType: "json",
-          data: {},
-          header: {
-            "Content-Type": "application/json"
-          }
-        })
-        .then(response => {
-          self.device = response.data[0];
-        });
     }
-  },
-  mounted() {
-    var self = this;
-    this._initDetail();
   }
 };
 </script>

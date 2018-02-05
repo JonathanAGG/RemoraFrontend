@@ -6,7 +6,8 @@ import MapSimplify from '@/components/simplify/MapSimplify'
 
 import DeviceList from '@/components/devices/DeviceList'
 import DeviceDetail from '@/components/devices/DeviceDetail'
-import DeviceEdit from '@/components/devices/DeviceEdit'
+import EditDevice from '@/components/devices/EditDevice'
+import AddDevice from '@/components/devices/AddDevice'
 
 Vue.use(Router)
 
@@ -33,14 +34,19 @@ export default new Router({
       component: DeviceList
     },
     {
+      path: '/devices/new',
+      name: 'AddDevice',
+      component: AddDevice
+    },
+    {
       path: '/devices/:id',
       name: 'DeviceDetail',
       component: DeviceDetail
     },
     {
       path: '/devices/:id/edit',
-      name: 'DeviceEdit',
-      component: DeviceEdit
+      name: 'EditDevice',
+      component: EditDevice
     }
   ]
 })

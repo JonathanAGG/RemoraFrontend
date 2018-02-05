@@ -1,19 +1,25 @@
 <template>
 <div id="deviceList">
 
-<label style="margin-bottom: 3%">Devices List</label>
+<div class="row"> 
+
+  <div class="col-xs-11">
+    <label style="margin-bottom: 3%">Devices List</label>
+  </div>
+  <div class="col-xs-1">
+    <router-link :to="{ name: 'AddDevice'}"  title="New Device">
+      <span class="glyphicon glyphicon-plus"></span>
+    </router-link>
+  </div>
+</div>
+
 <table class="table table-hover">
-<!--     <thead>
-      <tr>
-        <th>Devices List</th>
-      </tr>
-    </thead> -->
     <tbody>
       <tr v-for="device in devices">
         <td>{{device.ID}}</td>
         <td> <a href="javascript:void(0)" @click="_openStats(device.ID)" title="Stats">Stats</a> </td>
         <td> <router-link :to="{ name: 'DeviceDetail', params: { id: device.ID }}"  title="Details">Details</router-link></td>
-        <td> <router-link :to="{ name: 'DeviceEdit', params: { id: device.ID }}"  title="Details">Edit</router-link></td>
+        <td> <router-link :to="{ name: 'EditDevice', params: { id: device.ID }}"  title="Details">Edit</router-link></td>
       </tr>
     </tbody>
   </table>

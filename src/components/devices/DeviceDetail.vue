@@ -22,7 +22,7 @@
       <div class="col-md-6"><strong>Ship type:</strong>  {{detail.shipType}} </div>
 
       <div class="col-md-6"><strong>Autonomy:</strong>  {{detail.autonomy}} </div>
-      <div class="col-md-6"><strong>Eslora (mts):</strong>  {{detail.length}} </div>
+      <div class="col-md-6"><strong>Eslora (mts):</strong>  {{detail.eslora}} </div>
 
       <div class="col-md-6"><strong>Reason for request:</strong>  {{detail.requestReason}} </div>
       <div class="col-md-6"><strong>Littoral zone:</strong>  {{detail.littoralZone}} </div>
