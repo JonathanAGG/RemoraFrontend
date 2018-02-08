@@ -35,7 +35,8 @@ const webpackConfig = merge(baseWebpackConfig, {
     new UglifyJsPlugin({
       uglifyOptions: {
         compress: {
-          warnings: false
+          warnings: false,
+          comparisons: false,  // don't optimize comparisons
         }
       },
       sourceMap: config.build.productionSourceMap,
@@ -115,7 +116,14 @@ const webpackConfig = merge(baseWebpackConfig, {
         to: config.build.assetsSubDirectory,
         ignore: ['.*']
       }
-    ])
+    ]),
+    new webpack.ProvidePlugin({
+      Vue: ['vue/dist/vue.esm.js', 'default'],
+      jQuery: 'jquery',
+      'window.jQuery': 'jquery',
+      $: 'jquery',
+      moment: 'moment',
+    })
   ]
 })
 

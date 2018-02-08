@@ -19,7 +19,7 @@
         <td>{{device.ID}}</td>
         <td> <a href="javascript:void(0)" @click="_openStats(device.ID)" title="Stats">Stats</a> </td>
         <td> <a href="javascript:void(0)" @click="_flyToFeature(device.ID)" title="View">View</a> </td>
-        <td> <router-link :to="{ name: 'DeviceDetail', params: { id: device.ID }}"  title="Details">Details</router-link></td>
+        <!-- <td> <router-link :to="{ name: 'DeviceDetail', params: { id: device.ID }}"  title="Details">Details</router-link></td> -->
       </tr>
       <tr>
         <td>
