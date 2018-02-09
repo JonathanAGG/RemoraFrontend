@@ -50,6 +50,7 @@ export default {
           "icon-rotate": { type: "identity", property: "Head" }
         }
       });
+      eventBus.$emit("loadedPoints");//Indica que los puntos se cargaron correctamente
       this._createPopUps()
     },
     _createPopUps: function() {

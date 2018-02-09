@@ -48,6 +48,7 @@ export default {
           "line-width": 2
         }
       });
+      eventBus.$emit("loadedLines");//Indica que las lineas se cargaron correctamente
     },
     _updateLines: function(featureCollection) {
       this.map.getSource("scLines").setData(featureCollection);

@@ -62,6 +62,7 @@ export default {
           }
         });
       }
+      eventBus.$emit("loadedSquares");//Indica que los cuadros se cargaron correctamente
     },
     _updateSquares: function(featureCollection) {
       this.map.getSource("scSquares").setData(featureCollection);

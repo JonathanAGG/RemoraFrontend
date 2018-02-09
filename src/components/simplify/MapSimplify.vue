@@ -2,6 +2,7 @@
   <div class="zeus">
       <div id="map">
         <simplify-control v-bind:objMap="map"></simplify-control>
+        <loader-map v-if="isLoadingMap || isLoadingGeofences || isLoadingSimplifys || isLoadingSquares"></loader-map>
       </div>
   
       <squares v-bind:objMap="map"></squares>
@@ -16,6 +17,7 @@
 import eventBus from "../../eventBus";
 import mapboxgl from "mapbox-gl";
 
+import LoaderMap from "../common/LoaderMap";
 import Alerts from "../common/Alerts";
 import Geofences from "../common/Geofences";
 import Simplifys from "../common/Simplifys";
@@ -30,12 +32,17 @@ export default {
     Simplifys,
     Squares,
     SimplifyProcess,
-    SimplifyControl
+    SimplifyControl,
+    LoaderMap
   },
   data() {
     return {
       map: Object,
-      simplifyFeature: Object
+      simplifyFeature: Object,
+      isLoadingMap: true,
+      isLoadingGeofences:true,
+      isLoadingSimplifys:true,
+      isLoadingSquares:true
     };
   },
   methods: {
@@ -45,14 +52,35 @@ export default {
 
       this.map = new mapboxgl.Map({
         container: "map",
-        style: "mapbox://styles/mapbox/dark-v9",
+        style: "mapbox://styles/mapbox/light-v9",
         center: [-84.07836513337293, 9.933419690622571],
         zoom: 6
       });
     }
   },
   mounted() {
+    var self = this;
     this._loadMap();
+
+    //Captura si el mapa termino de cargar 
+    this.map.on("load", () => {
+      self.isLoadingMap = false;
+    });
+
+    //Captura si las geofences terminaron de cargar 
+    eventBus.$on("loadedGeofences", function() {
+      self.isLoadingGeofences = false
+    });
+
+    //Captura si las geofences simplificadas terminaron de cargar 
+    eventBus.$on("loadedSimplifys", function() {
+      self.isLoadingSimplifys = false
+    });
+
+    //Captura si los cuadros terminaron de cargar 
+    eventBus.$on("loadedSquares", function() {
+      self.isLoadingSquares = false
+    });
    
   }
 };

@@ -3,6 +3,7 @@
       
       <div id="map"> 
         <geofence-control v-bind:objMap="map"></geofence-control>
+        <loader-map v-if="isLoadingMap || isLoadingGeofences"></loader-map>
       </div>
       <geofences v-bind:objMap="map"></geofences>
       <geofence-list v-bind:objMap="map"></geofence-list>
@@ -15,6 +16,7 @@
 import eventBus from "../../eventBus";
 import mapboxgl from "mapbox-gl";
 
+import LoaderMap from "../common/LoaderMap";
 import Alerts from "../common/Alerts";
 import Geofences from "../common/Geofences";
 import ImportGeofence from "./ImportGeofence";
@@ -27,11 +29,14 @@ export default {
     Geofences,
     GeofenceControl,
     ImportGeofence,
-    GeofenceList
+    GeofenceList,
+    LoaderMap
   },
   data() {
     return {
-      map: Object
+      map: Object,
+      isLoadingMap: true,
+      isLoadingGeofences:true
     };
   },
   methods: {
@@ -41,14 +46,25 @@ export default {
 
       this.map = new mapboxgl.Map({
         container: "map",
-        style: "mapbox://styles/mapbox/streets-v9",
+        style: "mapbox://styles/mapbox/light-v9",
         center: [-84.07836513337293, 9.933419690622571],
         zoom: 6
       });
     }
   },
   mounted() {
+    var self = this;
     this._loadMap();
+
+    //Captura si el mapa termino de cargar 
+    this.map.on("load", () => {
+      this.isLoadingMap = false;
+    });
+
+    //Captura si las geofences terminaron de cargar 
+    eventBus.$on("loadedGeofences", function() {
+      self.isLoadingGeofences = false
+    });
   }
 };
 </script>

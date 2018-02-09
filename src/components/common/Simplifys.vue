@@ -51,6 +51,8 @@ export default {
           "fill-opacity": 0.8
         }
       });
+
+      eventBus.$emit("loadedSimplifys");//Indica que las geofences simplificadas se cargaron correctamente
     },
     _updateSimplifys: function(featureCollection) {
       this.map.getSource("scSimplifys").setData(featureCollection);

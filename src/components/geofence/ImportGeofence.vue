@@ -11,7 +11,7 @@
                 </div>
                 <div class="modal-body">
                   <input type="file" accept=".zip" id="inputFile" @change="_importFile($event)">
-
+                  <loader-process v-if="isLoading"></loader-process>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" v-show="showImportBtn" @click="_parseToGeojson()">Import</button>
@@ -24,6 +24,7 @@
 
 <script>
 import eventBus from "../../eventBus";
+import LoaderProcess from "../common/LoaderProcess";
 
 import axios from "axios";
 import shpToGeojson from "../../assets/libs/shp2geojson/shpToGeojson";
@@ -31,12 +32,13 @@ import shpToGeojson from "../../assets/libs/shp2geojson/shpToGeojson";
 export default {
   name: "ImportGeofence",
   props: [],
-  components: {},
+  components: {LoaderProcess},
   data() {
     return {
       file: Object,
       showImportBtn: false,
-      isSuccess: false
+      isSuccess: false,
+      isLoading: false
     };
   },
   methods: {
@@ -66,15 +68,18 @@ export default {
     },
     _saveGeofences: function(featureCollection) {
       let self = this;
+      this.isLoading =true;
       //Envia la geofence al server para almacenarla
       axios
         .post(process.env.HTTP_SERVER_URL + "geofences", featureCollection)
         .then(function(response) {
+          self.isLoading =false;
           $("#importGeofenceModal").modal("hide");
           eventBus.$emit("initGeofence"); //Actializa el mapa
           eventBus.$emit("successAlert", "Saved Geofence."); //Mostrar mensaje de exito
         })
         .catch(function(error) {
+          $("#importGeofenceModal").modal("hide");
           eventBus.$emit("dangerAlert", error); //Mostrar mensaje de error
           console.log("err", error);
         });

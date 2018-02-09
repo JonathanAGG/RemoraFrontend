@@ -63,6 +63,8 @@ export default {
       if (this.map.getLayer("lyrSimplifys")) {
         this.map.moveLayer("lyrGeofences", "lyrSimplifys");
       }
+
+      eventBus.$emit("loadedGeofences");//Indica que las geofences se cargaron correctamente
     },
     _observerEvents: function() {
       var self = this;
