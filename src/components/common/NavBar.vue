@@ -20,6 +20,7 @@
         <li><router-link to="/geofence">Geofence</router-link></li>
         <li><router-link to="/simplify">Simplify</router-link></li>
         <li><router-link to="/devices">Devices</router-link></li>
+        <li><router-link to="/infractions">Infractions</router-link></li>
         
       </ul>
     </div><!-- /.navbar-collapse -->

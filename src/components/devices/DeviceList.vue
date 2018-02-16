@@ -12,8 +12,9 @@
     </router-link>
   </div>
 </div>
-
+<loader-process v-if="isLoading"></loader-process>
 <table class="table table-hover">
+  
     <tbody>
       <tr v-for="device in devices">
         <td>{{device.ID}}</td>
@@ -39,17 +40,21 @@
 <script>
 import axios from "axios";
 import eventBus from "../../eventBus";
+
 import Alerts from "../common/Alerts";
 import Stats from "../common/Stats";
+import LoaderProcess from "../common/LoaderProcess";
+
 import DeleteDevice from "./DeleteDevice";
 
 export default {
   name: "DeviceList",
-  components: {Alerts, Stats, DeleteDevice },
+  components: {Alerts, Stats, DeleteDevice, LoaderProcess },
   data() {
     return {
       devices: Object,
-      deleteDevice: Object
+      deleteDevice: Object,
+      isLoading : true 
     };
   },
   methods: {
@@ -68,7 +73,7 @@ export default {
           })
           .then(response => {
             self.devices = response.data;
-            self.selectAll = true;
+            self.isLoading = false;
           });
     },
     _openStats: function(deviceId) {

@@ -14,6 +14,7 @@
       </tr>
     </tbody>
   </table>
+  <loader-process v-if="isLoading"></loader-process>
   <delete-geofence v-bind="{objMap:map, deleteGeofence}"></delete-geofence>
 
   </div>
@@ -21,19 +22,41 @@
 <script>
 import axios from "axios";
 import eventBus from "../../eventBus";
-import DeleteGeofence from "./DeleteGeofence"
+import DeleteGeofence from "./DeleteGeofence";
+import LoaderProcess from "../common/LoaderProcess";
+
 export default {
   name: "GeofencesList",
   props: ["objMap"],
-  components:{DeleteGeofence},
+  components: { DeleteGeofence, LoaderProcess },
   data() {
     return {
       map: Object,
       gjGeofences: Object,
-      deleteGeofence: ''
+      deleteGeofence: "",
+      isLoading: true
     };
   },
   methods: {
+    _initGeofences: function() {
+
+      var self = this;
+      /* Get Geofences */
+      axios
+        .request({
+          url: process.env.HTTP_SERVER_URL + "geofences",
+          method: "get",
+          responseType: "json",
+          data: {},
+          header: {
+            "Content-Type": "application/json"
+          }
+        })
+        .then(response => {
+          self.gjGeofences = response.data;
+          self.isLoading = false;
+        });
+    },
     _flyToFeature: function(feature) {
       var self = this;
       //Fly to geofence
@@ -54,7 +77,7 @@ export default {
         padding: { top: 10, bottom: 25, left: 15, right: 5 }
       });
       //Open confirm modal
-        $("#confirmDeleteModal").modal("show");
+      $("#confirmDeleteModal").modal("show");
     }
   },
   watch: {
@@ -63,11 +86,7 @@ export default {
     }
   },
   mounted() {
-    var self = this;
-    //Recibe los datos desde [GeofencesComponent] para cargar la lista
-    eventBus.$on("initGeofenceList", function(featureCollection) {
-      self.gjGeofences = featureCollection;
-    });
+    this._initGeofences();
   }
 };
 </script>

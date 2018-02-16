@@ -3,6 +3,7 @@
 
 <label style="margin-bottom: 3%">Filter Devices</label>
 <filter-date></filter-date>
+<loader-process v-if="isLoading"></loader-process>
 <table class="table table-hover">
 <!--     <thead>
       <tr>
@@ -48,15 +49,17 @@ import eventBus from "../../eventBus";
 import FilterDate from "./FilterDate";
 import Alerts from "../common/Alerts";
 import Stats from "../common/Stats";
+import LoaderProcess from "../common/LoaderProcess";
 export default {
   name: "FilterDevices",
-  components: { FilterDate, Alerts, Stats },
+  components: { FilterDate, Alerts, Stats, LoaderProcess },
   data() {
     return {
       devices: Object,
       selectedDevices: [],
       initDate: "",
-      endDate: ""
+      endDate: "",
+      isLoading: true
     };
   },
   methods: {
@@ -79,6 +82,7 @@ export default {
           .then(response => {
             self.devices = response.data;
             self.selectAll = true;
+            self.isLoading = false;
           });
     },
     _filter: function() {

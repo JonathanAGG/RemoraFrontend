@@ -9,6 +9,9 @@ import DeviceDetail from '@/components/devices/DeviceDetail'
 import EditDevice from '@/components/devices/EditDevice'
 import AddDevice from '@/components/devices/AddDevice'
 
+import DeviceListInfractions from '@/components/infractions/DeviceList'
+import DeviceInfractions from '@/components/infractions/DeviceInfractions'
+
 Vue.use(Router)
 
 export default new Router({
@@ -28,6 +31,7 @@ export default new Router({
       name: 'MapSimplify',
       component: MapSimplify
     },
+    /* Devices */
     {
       path: '/devices',
       name: 'DeviceList',
@@ -47,6 +51,17 @@ export default new Router({
       path: '/devices/:id/edit',
       name: 'EditDevice',
       component: EditDevice
-    }
+    },
+    /* Infractions */
+    {
+      path: '/infractions',
+      name: 'DeviceListInfractions',
+      component: DeviceListInfractions
+    },
+    {
+      path: '/infractions/:id',
+      name: 'DeviceInfractions',
+      component: DeviceInfractions
+    },
   ]
 })
