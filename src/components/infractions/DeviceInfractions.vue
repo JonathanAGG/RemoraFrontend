@@ -1,8 +1,6 @@
 <template>
 
-<div class="row">
-
-
+<div>
 
   <label class="title-infraction">Infractions List</label>
 
@@ -10,13 +8,28 @@
 
       <div class="card">
         <div class="container">
+
           <h4><b>{{infraction.initDate}}</b></h4> 
-          <p>Geofence: {{infraction.geofenceName}}</p>
-          <p>Distance: {{infraction.distance}}</p>
-          <p>Time: {{infraction.time}}</p>
+
+          <div class="row">
+          <div style="margin-left:4%" class="col-sm-5">
+            <p>Distance: {{infraction.distance}}</p>
+            <p>Time: {{infraction.time}}</p>
+            <p>Geofence: {{infraction.geofenceName}}</p>
+          </div>
+
+          <div style="margin-left:4%" class="col-sm-5">
+            <p>Start date: {{infraction.initDate}}</p>
+            <p>End date: {{infraction.endDate}}</p>
+            <a href="javascript:void(0)" @click="_viewMap(infraction)" title="View map">View map</a>
+          </div>
+          </div>
+
+          
         </div>
       </div>
     </div>
+    <map-infraction></map-infraction>
 </div>
 
 </template>
@@ -24,17 +37,19 @@
 import axios from "axios";
 import eventBus from "../../eventBus";
 import Alerts from "../common/Alerts";
+import MapInfraction from "./MapInfraction"
+
 export default {
   name: "DeviceDetail",
-  components: { Alerts },
+  components: { Alerts ,MapInfraction},
   data() {
     return {
       infractions: Object
     };
   },
   methods: {
-    _checkEvent: function() {
-      console.log("_checkEvent", this.selectedDevices);
+    _viewMap: function(infraction) {
+      eventBus.$emit('viewMapInfraction', infraction)
     },
     _initDetail: function() {
       var self = this;
@@ -65,8 +80,7 @@ export default {
 };
 </script>
 <style>
-
-.title-infraction{
+.title-infraction {
   margin: 3%;
 }
 #infractions {
@@ -80,7 +94,8 @@ export default {
   /* Add shadows to create the "card" effect */
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
-  margin:0% 3% 3% 3%
+  margin: 0% 3% 3% 3%;
+  position: relative;
 }
 
 /* On mouse-over, add a deeper shadow */
